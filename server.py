@@ -18,19 +18,19 @@ checkouts = []
 def getCatalog():
     return jsonify({"catalog":catalog});
 
-# @app.route('/library/getCheckouts',methods = ['GET'])
-# def getCheckouts():
-#     return jsonify({"checkouts":checkouts});
+@app.route('/library/getCheckouts',methods = ['GET'])
+def getCheckouts():
+    return jsonify({"checkouts":checkouts});
 
-# @app.route('/library/checkoutBook',methods = ['POST'])
-# def checkout():
-#     global balance
-#     transaction = request.get_json()
-#     transaction["type"] = "deposit"
-#     transaction["time"] = datetime.now()
-#     balance = balance + transaction["amount"]
-#     transactions.append(transaction)
-#     return jsonify({"balance":balance});
+@app.route('/library/checkoutBook',methods = ['POST'])
+def checkout():
+    global balance
+    transaction = request.get_json()
+    transaction["type"] = "deposit"
+    transaction["time"] = datetime.now()
+    balance = balance + transaction["amount"]
+    transactions.append(transaction)
+    return jsonify({"balance":balance});
 
 # @app.route('/library/returnBook',methods = ['POST'])
 # def returnBook():
