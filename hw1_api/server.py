@@ -59,7 +59,7 @@ def checkout():
         if person not in checkouts:
             checkouts[person] = {}
         for (author, books) in query.items():
-            if books != []:
+            if books != [] and author != "":
                 if author in catalog:
                     for book in books:
                         if author in catalog and book in catalog[author]:
@@ -113,7 +113,7 @@ def returnBook():
             return "You have no books checked out.\nPlease double check the name entered or consult the checkouts list (/library/getCheckouts)."
         else:
             for (author, books) in query.items():
-                if books != []:
+                if books != [] and author != "":
                     if author not in checkouts[person]:
                         if author not in books_not_returned:
                             books_not_returned[author] = []
@@ -158,13 +158,14 @@ def donate():
     newBooks = request.get_json(force=True)
 
     # loops through the input authors and books
-    for (key, value) in newBooks.items():
-        # if author exists in catalog, append input books
-        if key in catalog:
-            catalog[key].extend(value)
-        # if the author does not exist, create new key and append the input books
-        else:
-            catalog[key] = value
+    for (author, books) in newBooks.items():
+        if books != [] and author != "":
+            # if author exists in catalog, append input books
+            if author in catalog:
+                catalog[author].extend(books)
+            # if the author does not exist, create new key and append the input books
+            else:
+                catalog[author] = books
     # returns updated catalog
     return jsonify({"catalog":catalog})
 
