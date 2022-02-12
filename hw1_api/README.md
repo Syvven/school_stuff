@@ -35,7 +35,7 @@ As it is now, the user can:
 
 ## Running The Library
 
-### Running via Command Line
+### via Command Line
 
 Run the `server.py` file in the command line by typing
 
@@ -45,7 +45,7 @@ python server.py
 
 Then use Postman, CURL, or another program to call the available functions
 
-### Running via Docker
+### via Docker
 
 Build the image using
 
@@ -59,7 +59,7 @@ Then run the image using
  docker run -p 127.0.0.1:7999:7999 -it syven/hw1_api
 ```
 
-### Running via Singularity on CSE Labs Machines
+### via Singularity on CSE Labs Machines
 
 SSH into a CSE labs machine with the correct port using
 
