@@ -39,7 +39,9 @@ As it is now, the user can:
 
 Run the `server.py` file in the command line by typing
 
-`python server.py`
+```
+python server.py
+```
 
 Then use Postman, CURL, or another program to call the available functions
 
