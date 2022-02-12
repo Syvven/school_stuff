@@ -135,7 +135,7 @@ def returnBook():
                             else:
                                 if author not in books_not_returned:
                                     books_not_returned[author] = []
-                                books_not_returned[author].extend(books)
+                                books_not_returned[author].appen(book)
         if checkouts[person] == {}:
             checkouts.pop(person)
     
