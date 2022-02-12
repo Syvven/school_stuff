@@ -1,0 +1,231 @@
+# --------------------- Start Test 1 --------------------- #
+
+GET /library/getCatalog
+
+# --------------------- End Test 1 --------------------- #
+
+
+
+# --------------------- Start Test 2 --------------------- #
+
+GET /library/getCheckouts
+
+# --------------------- End Test 2 --------------------- #
+
+
+
+# --------------------- Start Test 3 --------------------- #
+
+POST /library/checkoutBook
+
+// Input:
+
+{
+    "Noah Hendrickson:
+    {
+        // empty author with empty books
+        "": [],
+
+        // empty author with books 
+        "": ["Fahrenheit 451"]
+
+        // author with empty books 
+        "Bradbury, Ray": []
+
+        // author that does not exist with books that dont exist in catalog
+        "Biden, Joe": ["President", "Hello World"],
+
+        // author that does not exist with books that do exist in catalog 
+        "Doe, Jane": ["1984", "The Hobbit"],
+
+        // author that does exist with books that do not exist in catalog
+        "Orwell, George": ["Animal 1984", "Big Brother Farm"],
+
+        // author that does exist with books that both do and dont exist in catalog 
+        "Asmiov, Isaac": ["The Gods Themselves", "I, Robot", "I, Biden", "Caves of Iron"],
+
+        // author that does exist checking out a single book
+        "Riordan, Rick": ["Percy Jackson & The Olympians: The Lightning Thief"],
+
+        // author that does exist checking out multiple books 
+        "Corey, James SA": ["Nemesis Games", "Persepolis Rising"],
+
+        // author that does exist checking out all their books
+        "Bradbury, Ray": ["Fahrenheit 451],
+
+        // author that does exist checking out all their books then an extra that does not exist
+        "Huxley, Aldous": ["Brave New World", "Nervous Old Ecosystem"]
+    }
+}
+
+// should return:
+    Available books checked out.
+
+    Books not checked out due to not existing or not being in stock:
+    Biden, Joe: "President", "Hello World"
+    Doe, Jane: "1984", "The Hobbit"
+    Orwell, George: "Animal 1984", "Big Brother Farm"
+    Asimov, Isaac: "I, Biden", "Caves of Iron"
+    Huxley, Aldous: "Nervous Old Ecosystem"
+
+GET /library/getCatalog
+
+// should return:
+    {
+        "Orwell, George": ["1984", "Animal Farm"], 
+        "Asimov, Isaac": ["Foundation", "The Caves of Steel"], 
+        "Collins, Suzanne": ["The Hunger Games", "Catching Fire", "Mockingjay"],
+        "Riordan, Rick": ["Percy Jackson & The Olympians: Sea of Monsters"],
+        "Corey, James SA": ["Abaddon's Gate", "Cibola Burn", "Babylon's Ashes", "Tiamat's Wrath"],
+        "Tolkien, J.R.R.": ["The Hobbit", "The Silmarillion"]
+    }
+
+GET /library/getCheckouts
+
+// should return:
+    {
+    "John Doe": 
+        {
+            "Corey, James SA": ["Leviathan Wakes", "Calibans War"]
+        },
+    "Jane Joe": 
+        {
+            "Tolkien, J.R.R.": ["The Lord of The Rings"]
+        }
+    "Noah Hendrickson":
+        {
+            "Riordan, Rick": ["Percy Jackson & The Olympians: The Lightning Thief"],
+            "Corey, James SA": ["Nemesis Games", "Persepolis Rising"],
+            "Bradbury, Ray": ["Fahrenheit 451],
+            "Asmiov, Isaac": ["The Gods Themselves", "I, Robot"]
+            "Huxley, Aldous": ["Brave New World"]
+        }
+    }
+
+# --------------------- End Test 3 --------------------- #
+
+# --------------------- Start Test 4 --------------------- #
+
+POST /library/returnBook 
+
+// Input:
+
+{
+    "Noah Hendrickson:
+    {
+        // empty author with empty books
+        "": [],
+
+        // empty author with books 
+        "": ["Fahrenheit 451"]
+
+        // author with empty books 
+        "Bradbury, Ray": []
+
+        // author that does not exist in checkout
+        "Joe Biden": ["Book1"],
+
+        // author that exists with book that doesnt
+        "Riordan, Rick": ["10000"],
+
+        // author that exists with book that exists
+        "Asimov, Isaac": ["The Gods Themselves"],
+
+        // author that exists with multiple books that exist 
+        "Corey, James SA": ["Nemesis Games", "Persepolis Rising"],
+
+        // returning all books from an author
+        "Riordan, Rick": ["Percy Jackson & The Olympians: The Lightning Thief"],
+
+        // return all books and one that doesnt exist
+        "Huxley, Aldous": ["Brave New World", "Chamaleon"]
+    }
+}
+
+// should return:
+    Checked out books returned.
+
+    Books not returned due to not existing or not being checked out:
+    Joe Biden: "Book1"
+    Riordan, Rick: "10000"
+    Huxley, Aldous: "Chamaleon"
+
+GET /library/getCatalog 
+
+// should return:
+    {
+        "Orwell, George": ["1984", "Animal Farm"], 
+        "Asimov, Isaac": ["Foundation", "The Caves of Steel", "The Gods Themselves"], 
+        "Collins, Suzanne": ["The Hunger Games", "Catching Fire", "Mockingjay"],
+        "Riordan, Rick": ["Percy Jackson & The Olympians: Sea of Monsters", "Percy Jackson & The Olympians: The Lightning Thief"],
+        "Corey, James SA": ["Abaddon's Gate", "Cibola Burn", "Babylon's Ashes", "Tiamat's Wrath", "Nemesis Games", "Persepolis Rising"],
+        "Tolkien, J.R.R.": ["The Hobbit", "The Silmarillion"]
+        "Huxley, Aldous": ["Brave New World"]
+    }
+
+GET /library/getCheckouts
+
+// should return:
+    {
+    "John Doe": 
+        {
+            "Corey, James SA": ["Leviathan Wakes", "Calibans War"]
+        },
+    "Jane Joe": 
+        {
+            "Tolkien, J.R.R.": ["The Lord of The Rings"]
+        }
+    "Noah Hendrickson":
+        {
+            "Bradbury, Ray": ["Fahrenheit 451],
+            "Asmiov, Isaac": ["I, Robot"]
+        }
+    }
+
+# --------------------- End Test 4 --------------------- #
+
+
+
+# --------------------- Start Test 5 --------------------- #
+
+// starting from new instance
+
+POST /library/donateBooks
+
+// Input:
+    {
+        // add not author with no book 
+        "": [],
+
+        // add books with no author
+        "": ["Hello World"],
+
+        // add author with no books
+        "Joe Biden": [],
+
+        // add a book from an author that does not exist 
+        "Brown, Dan": ["The Davinci Code"],
+
+        // add multiple books from an author that does not exist 
+        "Meyer, Stephenie": ["Twilight", "New Moon"],
+
+        // add book from author who exists 
+        "Tolkien, J.R.R.": ["The Lord of The Rings"],
+
+        // add multiple books from author who exists
+        "Collins, Suzanne": ["The Ballad of Songbirds and Snakes", "Gregor the Overlander"]
+    }
+
+// should return:
+    {
+        "Orwell, George": ["1984", "Animal Farm"], 
+        "Bradbury, Ray": ["Fahrenheit 451"], 
+        "Huxley, Aldous": ["Brave New World"], 
+        "Asimov, Isaac": ["The Gods Themselves", "I, Robot", "Foundation", "The Caves of Steel"], 
+        "Collins, Suzanne": ["The Hunger Games", "Catching Fire", "Mockingjay", "The Ballad of Songbirds and Snakes", "Gregor the Overlander"],
+        "Riordan, Rick": ["Percy Jackson & The Olympians: The Lightning Thief", "Percy Jackson & The Olympians: Sea of Monsters"],
+        "Corey, James SA": ["Abaddon's Gate", "Cibola Burn", "Nemesis Games", "Babylon's Ashes", "Persepolis Rising", "Tiamat's Wrath"],
+        "Tolkien, J.R.R.": ["The Hobbit", "The Silmarillion", "The Lord of The Rings"]
+        "Meyer, Stephenie": ["Twilight", "New Moon"],
+        "Brown, Dan": ["The Davinci Code"]
+    }

@@ -54,12 +54,12 @@ def checkout():
 
     new_checkouts = request.get_json(force=True)
     for (person, query) in new_checkouts.items():
-        if person == {}:
+        if query == {}:
             return "No Books Checked Out"
-        if person not in checkouts:
-            checkouts[person] = {}
         for (author, books) in query.items():
             if books != [] and author != "":
+                if person not in checkouts:
+                    checkouts[person] = {}
                 if author in catalog:
                     for book in books:
                         if author in catalog and book in catalog[author]:
@@ -173,8 +173,5 @@ def donate():
 if __name__ == '__main__':
    app.run(host="0.0.0.0", port=7999, debug = True)
 
-# --------------------- Working Tests ---------------------
 
-# /library/getCatalog
-# /library/getCheckouts
-# 
+
