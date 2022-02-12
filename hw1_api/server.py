@@ -76,7 +76,14 @@ def checkout():
                     books_not_checked_out[author] = []
                 books_not_checked_out[author].append(book)
 
-    return ("Available books checked out.\nBooks not checked out:\n" + jsonify({books_not_checked_out}))
+    returnString = "Available books checked out.\nBooks not checked out due to not existing:\n"
+    for (author, books) in books_not_checked_out.items():
+        returnString += author + ": "
+        for book in books:
+            returnString += book + ", "
+        returnString = returnString[:-2]
+        returnString += "\n"
+    return returnString
             
 
 @app.route('/library/returnBook',methods = ['POST'])
@@ -110,3 +117,6 @@ def donate():
 
 if __name__ == '__main__':
    app.run(host="0.0.0.0", port=7999, debug = True)
+
+# Working Tests
+# 
