@@ -53,10 +53,10 @@ def checkout():
     books_not_checked_out = {}
 
     new_checkouts = request.get_json(force=True)
-    for person, query in new_checkouts:
+    for (person, query) in new_checkouts.items():
         if person not in checkouts:
             checkouts[person] = {}
-        for author, books in query:
+        for (author, books) in query.items():
             if author in catalog:
                 for book in books:
                     if book in catalog[author]:
@@ -97,7 +97,7 @@ def donate():
     newBooks = request.get_json(force=True)
 
     # loops through the input authors and books
-    for key, value in newBooks:
+    for (key, value) in newBooks.items():
         # if author exists in catalog, append input books
         if key in catalog:
             catalog[key].extend(value)
