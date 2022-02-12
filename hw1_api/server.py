@@ -132,6 +132,10 @@ def returnBook():
                                     if author not in catalog:
                                         catalog[author] = []
                                     catalog[author].append(book)
+                            else:
+                                if author not in books_not_returned:
+                                    books_not_returned[author] = []
+                                books_not_returned[author].extend(books)
         if checkouts[person] == {}:
             checkouts.pop(person)
     
