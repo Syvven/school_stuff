@@ -107,7 +107,7 @@ This will make your life much easier and will avoid unnecessary errors when sshi
     - allows the user to check out books
     - input should be as such, each element being a string:
 
->
+>```
 >// these comments should not be included in the input
 >// each entry should be a string
 >// author name is ordered such: "lastname, firstname middleinitial"
@@ -132,13 +132,13 @@ This will make your life much easier and will avoid unnecessary errors when sshi
 >             etc...
 >        }
 >}
->
+>```
 
 - POST → http://127.0.0.1:7999/library/returnBook
     - allows user to return books they have checked out
     - inputs should be as such, each element being a string:
 
->
+>```
 >// these comments should not be included in the input
 >// each entry should be a string
 >// author name is ordered such: "lastname, firstname middleinitial"
@@ -163,14 +163,14 @@ This will make your life much easier and will avoid unnecessary errors when sshi
 >             etc...
 >        }
 >}
->
+>```
 
 - POST → http://127.0.0.1:7999/library/donateBooks
     - allows the user to donate, or add, new books and authors to the catalog
     - returns catalog with new books added
     - input should be as follows, each element a string:
 
->
+>```
 >// these comments should not be included in the input
 >// each entry should be formatted as a string
 >// author name is ordered such: "lastname, firstname middleinitial"
@@ -184,7 +184,7 @@ This will make your life much easier and will avoid unnecessary errors when sshi
 >        <author2>: [<book3>, <book4>, etc...], 
 >        etc...
 >}
->
+>```
 
 ## Bugs / Suggestions
 
