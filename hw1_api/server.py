@@ -77,17 +77,28 @@ def checkout():
                 books_not_checked_out[author].append(book)
 
     returnString = "Available books checked out.\nBooks not checked out due to not existing:\n"
-    for (author, books) in books_not_checked_out.items():
-        returnString += author + ": "
-        for book in books:
-            returnString += book + ", "
+    for (author2, books2) in books_not_checked_out.items():
+        returnString += author2 + ": "
+        for book2 in books2:
+            returnString += book2 + ", "
         returnString = returnString[:-2]
         returnString += "\n"
     return returnString
             
-
+# user returns a book
+# input json in this format:
+# {
+#    <user name>: 
+#       {
+#           <author1>: [<book1>, <book2>, etc...],
+#           <author2>: [<book>, etc...],
+#           etc...,
+#       }
+# }
+#
 @app.route('/library/returnBook',methods = ['POST'])
 def returnBook():
+
     return "shit"
 
 # user inputs json in this format:
