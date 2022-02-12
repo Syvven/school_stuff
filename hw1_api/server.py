@@ -74,13 +74,13 @@ def checkout():
             else:
                 if author not in books_not_checked_out:
                     books_not_checked_out[author] = []
-                books_not_checked_out[author].append(book)
+                books_not_checked_out[author].extend(books)
 
-    returnString = "Available books checked out.\nBooks not checked out due to not existing:\n"
+    returnString = "Available books checked out.\n\nBooks not checked out due to not existing or not being in stock:\n"
     for (author2, books2) in books_not_checked_out.items():
         returnString += author2 + ": "
         for book2 in books2:
-            returnString += book2 + ", "
+            returnString += "\"" + book2 + "\", "
         returnString = returnString[:-2]
         returnString += "\n"
     return returnString
@@ -98,8 +98,45 @@ def checkout():
 #
 @app.route('/library/returnBook',methods = ['POST'])
 def returnBook():
+    global checkouts
+    global catalog
+    books_not_returned = {}
 
-    return "shit"
+    new_returns = request.get_json(force=True)
+    for (person, query) in new_returns.items():
+        if person not in checkouts:
+            return "You have no books checked out.\nPlease double check the name entered or consult the checkouts list (/library/getCheckouts)."
+        else:
+            for (author, books) in query.items():
+                if author not in checkouts[person]:
+                    if author not in books_not_returned:
+                        books_not_returned[author] = []
+                    books_not_returned[author].extend(books)
+                else:
+                    for book in books:
+                        if book not in checkouts[person][author]:
+                            if author not in books_not_returned:
+                                books_not_returned[author] = []
+                            books_not_returned[author].append(book)
+                        else:
+                            checkouts[person][author].remove(book)
+                            if checkouts[person][author] == []:
+                                checkouts[person].pop(author)
+                            if author not in catalog:
+                                catalog[author] = []
+                            catalog[author].append(book)
+        if checkouts[person] == {}:
+            checkouts.pop(person)
+    
+    returnString = "Checked out books returned.\n\nBooks not returned due to not existing or not being checked out:\n"
+    for (author2, books2) in books_not_returned.items():
+        returnString += author2 + ": "
+        for book2 in books2:
+            returnString += "\"" + book2 + "\", "
+        returnString = returnString[:-2]
+        returnString += "\n"
+    return returnString
+    
 
 # user inputs json in this format:
 # {
