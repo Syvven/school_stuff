@@ -66,7 +66,7 @@ POST /library/checkoutBook -> works
     Asimov, Isaac: "I, Biden", "Caves of Iron"
     Huxley, Aldous: "Nervous Old Ecosystem"
 
-GET /library/getCatalog 
+GET /library/getCatalog -> works
 
 // should return:
     {
@@ -78,7 +78,7 @@ GET /library/getCatalog
         "Tolkien, J.R.R.": ["The Hobbit", "The Silmarillion"]
     }
 
-GET /library/getCheckouts
+GET /library/getCheckouts -> works
 
 // should return:
     {
@@ -104,7 +104,7 @@ GET /library/getCheckouts
 
 # --------------------- Start Test 4 --------------------- #
 
-POST /library/returnBook 
+POST /library/returnBook -> works
 
 // Input:
 
@@ -145,7 +145,7 @@ POST /library/returnBook
     Riordan, Rick: "10000"
     Huxley, Aldous: "Chamaleon"
 
-GET /library/getCatalog 
+GET /library/getCatalog -> works
 
 // should return:
     {
@@ -158,7 +158,7 @@ GET /library/getCatalog
         "Huxley, Aldous": ["Brave New World"]
     }
 
-GET /library/getCheckouts
+GET /library/getCheckouts -> works
 
 // should return:
     {
@@ -185,13 +185,10 @@ GET /library/getCheckouts
 
 // starting from new instance
 
-POST /library/donateBooks
+POST /library/donateBooks -> works
 
 // Input:
     {
-        // add not author with no book 
-        "": [],
-
         // add books with no author
         "": ["Hello World"],
 
