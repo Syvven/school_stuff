@@ -52,7 +52,7 @@ def checkout():
     global catalog 
     books_not_checked_out = {}
 
-    new_checkouts = request.get_json()
+    new_checkouts = request.get_json(force=True)
     for (person, query) in new_checkouts:
         if person not in checkouts:
             checkouts[person] = {}
@@ -94,7 +94,7 @@ def donate():
     global catalog
 
     # gets input json data from the request
-    newBooks = request.get_json()
+    newBooks = request.get_json(force=True)
 
     # loops through the input authors and books
     for (key, value) in newBooks:
