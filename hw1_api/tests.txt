@@ -1,6 +1,6 @@
 # --------------------- Start Test 1 --------------------- #
 
-GET /library/getCatalog
+GET /library/getCatalog -> works
 
 # --------------------- End Test 1 --------------------- #
 
@@ -8,7 +8,7 @@ GET /library/getCatalog
 
 # --------------------- Start Test 2 --------------------- #
 
-GET /library/getCheckouts
+GET /library/getCheckouts -> works
 
 # --------------------- End Test 2 --------------------- #
 
@@ -16,21 +16,19 @@ GET /library/getCheckouts
 
 # --------------------- Start Test 3 --------------------- #
 
-POST /library/checkoutBook
+POST /library/checkoutBook -> works
 
 // Input:
 
 {
-    "Noah Hendrickson:
+    "Noah Hendrickson":
     {
-        // empty author with empty books
-        "": [],
 
         // empty author with books 
-        "": ["Fahrenheit 451"]
+        "": ["Fahrenheit 451"],
 
         // author with empty books 
-        "Bradbury, Ray": []
+        "Joe Bastianich": [],
 
         // author that does not exist with books that dont exist in catalog
         "Biden, Joe": ["President", "Hello World"],
@@ -42,7 +40,7 @@ POST /library/checkoutBook
         "Orwell, George": ["Animal 1984", "Big Brother Farm"],
 
         // author that does exist with books that both do and dont exist in catalog 
-        "Asmiov, Isaac": ["The Gods Themselves", "I, Robot", "I, Biden", "Caves of Iron"],
+        "Asimov, Isaac": ["The Gods Themselves", "I, Robot", "I, Biden", "Caves of Iron"],
 
         // author that does exist checking out a single book
         "Riordan, Rick": ["Percy Jackson & The Olympians: The Lightning Thief"],
@@ -51,7 +49,7 @@ POST /library/checkoutBook
         "Corey, James SA": ["Nemesis Games", "Persepolis Rising"],
 
         // author that does exist checking out all their books
-        "Bradbury, Ray": ["Fahrenheit 451],
+        "Bradbury, Ray": ["Fahrenheit 451"],
 
         // author that does exist checking out all their books then an extra that does not exist
         "Huxley, Aldous": ["Brave New World", "Nervous Old Ecosystem"]
@@ -68,7 +66,7 @@ POST /library/checkoutBook
     Asimov, Isaac: "I, Biden", "Caves of Iron"
     Huxley, Aldous: "Nervous Old Ecosystem"
 
-GET /library/getCatalog
+GET /library/getCatalog 
 
 // should return:
     {
@@ -111,16 +109,13 @@ POST /library/returnBook
 // Input:
 
 {
-    "Noah Hendrickson:
+    "Noah Hendrickson":
     {
-        // empty author with empty books
-        "": [],
-
         // empty author with books 
-        "": ["Fahrenheit 451"]
+        "": ["Fahrenheit 451"],
 
         // author with empty books 
-        "Bradbury, Ray": []
+        "Bradbury, Ray": [],
 
         // author that does not exist in checkout
         "Joe Biden": ["Book1"],

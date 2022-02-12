@@ -120,17 +120,18 @@ def returnBook():
                         books_not_returned[author].extend(books)
                     else:
                         for book in books:
-                            if book not in checkouts[person][author]:
-                                if author not in books_not_returned:
-                                    books_not_returned[author] = []
-                                books_not_returned[author].append(book)
-                            else:
-                                checkouts[person][author].remove(book)
-                                if checkouts[person][author] == []:
-                                    checkouts[person].pop(author)
-                                if author not in catalog:
-                                    catalog[author] = []
-                                catalog[author].append(book)
+                            if author in checkouts[person]:
+                                if book not in checkouts[person][author]:
+                                    if author not in books_not_returned:
+                                        books_not_returned[author] = []
+                                    books_not_returned[author].append(book)
+                                else:
+                                    checkouts[person][author].remove(book)
+                                    if checkouts[person][author] == []:
+                                        checkouts[person].pop(author)
+                                    if author not in catalog:
+                                        catalog[author] = []
+                                    catalog[author].append(book)
         if checkouts[person] == {}:
             checkouts.pop(person)
     
