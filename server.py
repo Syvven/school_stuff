@@ -24,13 +24,7 @@ def getCheckouts():
 
 @app.route('/library/checkoutBook',methods = ['POST'])
 def checkout():
-    global balance
-    transaction = request.get_json()
-    transaction["type"] = "deposit"
-    transaction["time"] = datetime.now()
-    balance = balance + transaction["amount"]
-    transactions.append(transaction)
-    return jsonify({"balance":balance});
+    return "piss"
 
 # @app.route('/library/returnBook',methods = ['POST'])
 # def returnBook():
