@@ -54,27 +54,30 @@ def checkout():
 
     new_checkouts = request.get_json(force=True)
     for (person, query) in new_checkouts.items():
+        if person == {}:
+            return "No Books Checked Out"
         if person not in checkouts:
             checkouts[person] = {}
         for (author, books) in query.items():
-            if author in catalog:
-                for book in books:
-                    if book in catalog[author]:
-                        if author in checkouts[person]:
-                            checkouts[person][author].append(book)
+            if books != []:
+                if author in catalog:
+                    for book in books:
+                        if author in catalog and book in catalog[author]:
+                            if author in checkouts[person]:
+                                checkouts[person][author].append(book)
+                            else:
+                                checkouts[person][author] = [book]
+                            catalog[author].remove(book)
+                            if catalog[author] == []:
+                                catalog.pop(author)
                         else:
-                            checkouts[person][author] = [book]
-                        catalog[author].remove(book)
-                        if catalog[author] == []:
-                            catalog.pop(author)
-                    else:
-                        if author not in books_not_checked_out:
-                            books_not_checked_out[author] = []
-                        books_not_checked_out[author].append(book)
-            else:
-                if author not in books_not_checked_out:
-                    books_not_checked_out[author] = []
-                books_not_checked_out[author].extend(books)
+                            if author not in books_not_checked_out:
+                                books_not_checked_out[author] = []
+                            books_not_checked_out[author].append(book)
+                else:
+                    if author not in books_not_checked_out:
+                        books_not_checked_out[author] = []
+                    books_not_checked_out[author].extend(books)
 
     returnString = "Available books checked out.\n\nBooks not checked out due to not existing or not being in stock:\n"
     for (author2, books2) in books_not_checked_out.items():
@@ -104,27 +107,30 @@ def returnBook():
 
     new_returns = request.get_json(force=True)
     for (person, query) in new_returns.items():
+        if person == {}:
+            return "No Books Returned"
         if person not in checkouts:
             return "You have no books checked out.\nPlease double check the name entered or consult the checkouts list (/library/getCheckouts)."
         else:
             for (author, books) in query.items():
-                if author not in checkouts[person]:
-                    if author not in books_not_returned:
-                        books_not_returned[author] = []
-                    books_not_returned[author].extend(books)
-                else:
-                    for book in books:
-                        if book not in checkouts[person][author]:
-                            if author not in books_not_returned:
-                                books_not_returned[author] = []
-                            books_not_returned[author].append(book)
-                        else:
-                            checkouts[person][author].remove(book)
-                            if checkouts[person][author] == []:
-                                checkouts[person].pop(author)
-                            if author not in catalog:
-                                catalog[author] = []
-                            catalog[author].append(book)
+                if books != []:
+                    if author not in checkouts[person]:
+                        if author not in books_not_returned:
+                            books_not_returned[author] = []
+                        books_not_returned[author].extend(books)
+                    else:
+                        for book in books:
+                            if book not in checkouts[person][author]:
+                                if author not in books_not_returned:
+                                    books_not_returned[author] = []
+                                books_not_returned[author].append(book)
+                            else:
+                                checkouts[person][author].remove(book)
+                                if checkouts[person][author] == []:
+                                    checkouts[person].pop(author)
+                                if author not in catalog:
+                                    catalog[author] = []
+                                catalog[author].append(book)
         if checkouts[person] == {}:
             checkouts.pop(person)
     
@@ -166,5 +172,8 @@ def donate():
 if __name__ == '__main__':
    app.run(host="0.0.0.0", port=7999, debug = True)
 
-# Working Tests
+# --------------------- Working Tests ---------------------
+
+# /library/getCatalog
+# /library/getCheckouts
 # 
